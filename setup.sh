@@ -31,12 +31,7 @@ pip3 install jupyter_nbextensions_configurator
 # jupyter stuff
 jupyter contrib nbextension install --system
 
-# currently need to manually enable these...doing this doesn't work
-# wrong path?
-sudo -u vagrant jupyter nbextensions enable toc2/main
-sudo -u vagrant jupyter nbextensions enable collapsible_headings/main
 
-sudo -u vagrant jupyter nbextensions_configurator enable --system
 
 # USB permissions
 echo "SUBSYSTEM==\"usb\", ATTRS{idVendor}==\"2b3e\", ATTRS{idProduct}==\"ace2\", MODE=\"0664\", GROUP=\"plugdev\"" > /etc/udev/rules.d/99-newae.rules
@@ -59,7 +54,17 @@ chmod +x /home/vagrant/run_jupyter.sh
 # copy jupyter config
 mkdir -p /home/vagrant/.jupyter
 cp /vagrant/jupyter_notebook_config.py /home/vagrant/.jupyter/
-chown -R vagrant:vagrant /home/vagrant/.jupyter/jupyter_notebook_config.py
+
+# make sure jupyter is under the vagrant user
+# maybe just make /home/vagrant all vagrant?
+chown vagrant:vagrant -R /home/vagrant/
+
+# currently need to manually enable these...doing this doesn't work
+# wrong path?
+sudo -Hu vagrant jupyter nbextension enable toc2/main
+sudo -Hu vagrant jupyter nbextension enable collapsible_headings/main
+
+jupyter nbextensions_configurator enable --system
 
 # check if cron job already inserted, and if not insert it
 if !(crontab -u vagrant -l | grep "run_jupyter\.sh"); then
