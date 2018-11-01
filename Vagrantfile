@@ -15,7 +15,6 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
 
   config.vm.provision :shell, path: "setup.sh"
-  config.vm.provision :shell, path: "run.sh", run: 'always'
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -24,6 +23,9 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--usb", "on"]
     vb.customize ["modifyvm", :id, "--usbehci", "on"]
+    vb.gui = true
+    vb.name = "ChipWhisperer Jupyter"
+    vb.customize ["modifyvm", :id, "--uartmode1", "disconnected"]
   end
   #vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'ESP', '--vendorid', '0x1a86', '--productid', '0x7523'] 
 
@@ -59,7 +61,7 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
-    vb.gui = true
+    
   
     # Customize the amount of memory on the VM:
     #vb.memory = "1024"
