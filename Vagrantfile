@@ -26,6 +26,8 @@ Vagrant.configure("2") do |config|
     vb.gui = true
     vb.name = "ChipWhisperer Jupyter"
     vb.customize ["modifyvm", :id, "--uartmode1", "disconnected"]
+    vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'NewAE Technology Inc. ChipWhisperer Lite [0100]', '--vendorid', '0x2b3e', '--productid', '0xace2']
+    vb.customize ['usbfilter', 'add', '1', '--target', :id, '--name', 'NewAE Technology Inc. ChipWhisperer Nano [0100]', '--vendorid', '0x2b3e', '--productid', '0xace0'] 
   end
   #vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'ESP', '--vendorid', '0x1a86', '--productid', '0x7523'] 
 
