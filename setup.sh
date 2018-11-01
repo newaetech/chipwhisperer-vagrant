@@ -35,6 +35,7 @@ jupyter contrib nbextension install --system
 
 # USB permissions
 echo "SUBSYSTEM==\"usb\", ATTRS{idVendor}==\"2b3e\", ATTRS{idProduct}==\"ace2\", MODE=\"0664\", GROUP=\"plugdev\"" > /etc/udev/rules.d/99-newae.rules
+echo "SUBSYSTEM==\"usb\", ATTRS{idVendor}==\"2b3e\", ATTRS{idProduct}==\"ace0\", MODE=\"0664\", GROUP=\"plugdev\"" >> /etc/udev/rules.d/99-newae.rules
 usermod -a -G plugdev vagrant
 udevadm control --reload-rules
 
