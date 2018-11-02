@@ -26,6 +26,7 @@ pip3 install matplotlib
 pip3 install termcolor
 pip3 install jupyter_contrib_nbextensions
 pip3 install bokeh
+pip3 install tabulate
 pip3 install jupyter_nbextensions_configurator
 
 # jupyter stuff
