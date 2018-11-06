@@ -2,6 +2,7 @@
 
 # normal apt installs
 apt-get update
+apt-get upgrade
 apt-get install -y python3
 apt-get install -y python3-pip
 apt-get install -y git
@@ -28,11 +29,11 @@ pip3 install jupyter_contrib_nbextensions
 pip3 install bokeh
 pip3 install tabulate
 pip3 install jupyter_nbextensions_configurator
+pip3 install SciPy
+pip3 install pandas
 
 # jupyter stuff
 jupyter contrib nbextension install --system
-
-
 
 # USB permissions
 echo "SUBSYSTEM==\"usb\", ATTRS{idVendor}==\"2b3e\", ATTRS{idProduct}==\"ace2\", MODE=\"0664\", GROUP=\"plugdev\"" > /etc/udev/rules.d/99-newae.rules
@@ -61,8 +62,7 @@ cp /vagrant/jupyter_notebook_config.py /home/vagrant/.jupyter/
 # maybe just make /home/vagrant all vagrant?
 chown vagrant:vagrant -R /home/vagrant/
 
-# currently need to manually enable these...doing this doesn't work
-# wrong path?
+# Enable jupyter extensions
 sudo -Hu vagrant jupyter nbextension enable toc2/main
 sudo -Hu vagrant jupyter nbextension enable collapsible_headings/main
 
