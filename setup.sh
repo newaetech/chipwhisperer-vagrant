@@ -47,7 +47,7 @@ chown -R vagrant:vagrant chipwhisperer
 cd chipwhisperer/software
 git checkout cw5dev
 git pull
-python3 setup.py install
+python3 setup.py develop
 
 # copy cron script from vagrant folder
 cp /vagrant/run_jupyter.sh /home/vagrant/
