@@ -20,20 +20,7 @@ dpkg -i libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb libnewlib-dev_3.0.0.201
 
 # pip installs
 python3 -m pip install --upgrade pip
-pip3 install jupyter
-pip3 install numpy
-pip3 install tqdm
-pip3 install matplotlib
-pip3 install termcolor
-pip3 install jupyter_contrib_nbextensions
-pip3 install bokeh
-pip3 install tabulate
-pip3 install jupyter_nbextensions_configurator
-pip3 install SciPy
-pip3 install pandas
 
-# jupyter stuff
-jupyter contrib nbextension install --system
 
 # USB permissions
 echo "SUBSYSTEM==\"usb\", ATTRS{idVendor}==\"2b3e\", ATTRS{idProduct}==\"ace2\", MODE=\"0664\", GROUP=\"plugdev\"" > /etc/udev/rules.d/99-newae.rules
@@ -47,12 +34,16 @@ chown -R vagrant:vagrant chipwhisperer
 cd chipwhisperer/software
 git checkout cw5dev
 git pull
+pip3 install -r requirements.txt
 python3 setup.py develop
 
 # copy cron script from vagrant folder
 cp /vagrant/run_jupyter.sh /home/vagrant/
 chown -R vagrant:vagrant /home/vagrant/run_jupyter.sh
 chmod +x /home/vagrant/run_jupyter.sh
+
+# jupyter stuff
+jupyter contrib nbextension install --system
 
 # copy jupyter config
 mkdir -p /home/vagrant/.jupyter
