@@ -22,11 +22,6 @@ dpkg -i libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb libnewlib-dev_3.0.0.201
 python3 -m pip install --upgrade pip
 
 
-# USB permissions
-echo "SUBSYSTEM==\"usb\", ATTRS{idVendor}==\"2b3e\", ATTRS{idProduct}==\"ace2\", MODE=\"0664\", GROUP=\"plugdev\"" > /etc/udev/rules.d/99-newae.rules
-echo "SUBSYSTEM==\"usb\", ATTRS{idVendor}==\"2b3e\", ATTRS{idProduct}==\"ace0\", MODE=\"0664\", GROUP=\"plugdev\"" >> /etc/udev/rules.d/99-newae.rules
-usermod -a -G plugdev vagrant
-udevadm control --reload-rules
 
 # get chipwhisperer and install
 git clone https://github.com/newaetech/chipwhisperer
@@ -36,6 +31,12 @@ git checkout cw5dev
 git pull
 pip3 install -r requirements.txt
 python3 setup.py develop
+
+# USB permissions
+cd ../hardware
+cp 99-newae.rules /etc/udev/rules.d/
+usermod -a -G plugdev vagrant
+udevadm control --reload-rules
 
 # copy cron script from vagrant folder
 cp /vagrant/run_jupyter.sh /home/vagrant/
