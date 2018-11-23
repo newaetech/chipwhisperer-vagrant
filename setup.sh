@@ -21,7 +21,12 @@ dpkg -i libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb libnewlib-dev_3.0.0.201
 # pip installs
 python3 -m pip install --upgrade pip
 
-
+# get lascar and install
+git clone https://github.com/Ledger-Donjon/lascar
+chown -R vagrant:vagrant lascar
+cd lascar
+python3 setup.py install
+cd ..
 
 # get chipwhisperer and install
 git clone https://github.com/newaetech/chipwhisperer
