@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 
 # normal apt installs
-apt-get update
-apt-get upgrade
+
 apt-get install -y python3
 apt-get install -y python3-pip
+apt-get install -y python3-tk #for matplotlib/lascar
 apt-get install -y git
 apt-get install -y gcc-avr
 apt-get install -y avr-libc
 apt-get install -y gcc-arm-none-eabi
 apt-get install -y make
+
+apt-get update
+apt-get upgrade
 
 # https://github.com/bbcmicrobit/micropython/issues/514
 # Ubuntu 18.04 arm-none-eabi-gcc has broken libc/nano specs (always tries to use full arm w/invalid instructions)
@@ -25,6 +28,7 @@ python3 -m pip install --upgrade pip
 git clone https://github.com/Ledger-Donjon/lascar
 chown -R vagrant:vagrant lascar
 cd lascar
+pip3 install --upgrade colorama
 python3 setup.py install
 cd ..
 
@@ -34,6 +38,8 @@ chown -R vagrant:vagrant chipwhisperer
 cd chipwhisperer/software
 git checkout cw5dev
 git pull
+sudo -Hu vagrant git config --global user.name "Vagrant"
+sudo -Hu vagrant git config --global user.email "Vagrant@none.com"
 pip3 install -r requirements.txt
 python3 setup.py develop
 

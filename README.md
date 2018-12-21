@@ -1,10 +1,12 @@
 # chipwhisperer-vagrant
-chipwhisperer-vagrant is a repo containing the needed vagrant file and scripts for building the ChipWhisperer Jupyter vm. It should take care of everthing needed, including installing packages, installing python modules using pip, enabling needed jupyter extensions, and creaing an @reboot cron job to run jupyter.
+chipwhisperer-vagrant is a repo containing the needed vagrant file and scripts for building the ChipWhisperer Jupyter vm. It should take care of everything needed, including installing packages, installing python modules using pip, enabling needed jupyter extensions, and creaing an @reboot cron job to run jupyter.
 
 The created VM is called ChipWhisperer Jupyter and it should be stored in the regular spot where VirtualBox puts its VMs. 
 
 See setup.sh for the shell commands used to setup the VM
 
+## Building the VM
+To build the VM, navigate to this folder and run `vagrant up`.
 
 ## Connecting to Jupyter
 To connect to jupyter, the user will have to go into *Global Tools* in VirtualBox and create a (or modify an existing) Host-Only network with:
