@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # normal apt installs
+apt-get update
+apt-get upgrade
 
 apt-get install -y python3
 apt-get install -y python3-pip
