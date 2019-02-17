@@ -12,9 +12,14 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "debian/stretch64"
 
-  config.vm.provision :shell, path: "setup.sh"
+
+  config.vm.provision "file", source: "Makefile", destination: "Makefile"
+  config.vm.provision "file", source: "pyenv.tail", destination: "pyenv.tail"
+  config.vm.provision "shell",
+   inline: "DEBIAN_FRONTEND=noninteractive apt-get install make; DEBIAN_FRONTEND=noninteractive make"
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -38,6 +43,12 @@ Vagrant.configure("2") do |config|
   # NOTE: This will enable public access to the opened port
   #config.vm.network "forwarded_port", guest: 8888, host: 8080
 
+
+config.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2222
+config.vm.network "forwarded_port", guest: 8888, host: 8888
+
+
+
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
@@ -45,7 +56,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.10"
+  #config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
