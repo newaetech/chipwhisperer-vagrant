@@ -264,7 +264,7 @@ c.NotebookApp.ip = '0.0.0.0'
 #  platform dependent and determined by the python standard library `webbrowser`
 #  module, unless it is overridden using the --browser (NotebookApp.browser)
 #  configuration option.
-c.NotebookApp.open_browser = True
+c.NotebookApp.open_browser = False
 
 ## Hashed password to use for web authentication.
 #  
@@ -281,7 +281,7 @@ c.NotebookApp.open_browser = True
 #  
 #  In such a case, server the notebook server on localhost is not secure since
 #  any user can connect to the notebook server via ssh.
-c.NotebookApp.password_required = False
+c.NotebookApp.password_required = True
 
 ## The port the notebook server will listen on.
 #c.NotebookApp.port = 8888
