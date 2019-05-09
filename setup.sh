@@ -12,6 +12,7 @@ apt-get install -y gcc-avr
 apt-get install -y avr-libc
 apt-get install -y gcc-arm-none-eabi
 apt-get install -y make
+apt-get install -y dos2unix
 
 apt-get update
 apt-get upgrade
@@ -62,6 +63,9 @@ jupyter contrib nbextension install --system
 # copy jupyter config
 mkdir -p /home/vagrant/.jupyter
 cp /vagrant/jupyter_notebook_config.py /home/vagrant/.jupyter/
+#token=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)
+#echo $token > /home/vagrant/token
+#sed -i s/NEWAE/$token/ /home/vagrant/.jupyter/jupyter_notebook_config.py
 
 # make sure jupyter is under the vagrant user
 # maybe just make /home/vagrant all vagrant?
@@ -73,10 +77,13 @@ sudo -Hu vagrant jupyter nbextension enable collapsible_headings/main
 
 jupyter nbextensions_configurator enable --system
 
+dos2unix /home/vagrant/run_jupyter.sh /home/vagrant/.jupyter/jupyter_notebook_config.py
 # check if cron job already inserted, and if not insert it
 if !(crontab -u vagrant -l | grep "run_jupyter\.sh"); then
     (crontab -u vagrant -l 2>/dev/null; echo "@reboot /home/vagrant/run_jupyter.sh") | crontab -u vagrant -
 fi
 
+apt-get update
+apt-get upgrade
 #done now reboot
 reboot

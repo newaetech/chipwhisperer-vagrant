@@ -11,13 +11,18 @@ all:
 	apt-get install -y avr-libc
 	apt-get install -y gcc-arm-none-eabi
 	apt-get install -y make
+	apt-get install -y dos2unix
 	# https://github.com/bbcmicrobit/micropython/issues/514
 	# Ubuntu 18.04 arm-none-eabi-gcc has broken libc/nano specs (always tries to use full arm w/invalid instructions)
 	-rm *.deb
 	wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-dev_3.0.0.20180802-2_all.deb
 	wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb
 	#dpkg -i libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb libnewlib-dev_3.0.0.20180802-2_all.deb 
+	dos2unix /home/vagrant/pyenv.tail
+
 	su vagrant - -c "make stage2"
+
+	find /home/vagrant/work/projects -exec dos2unix {} \;
 
 	# USB permissions
 	cp /home/vagrant/work/projects/chipwhisperer/hardware/99-newae.rules /etc/udev/rules.d/
@@ -26,6 +31,7 @@ all:
 
 	# copy cron script from vagrant folder
 	cp /vagrant/run_jupyter.sh /home/vagrant/
+	dos2unix /home/vagrant/run_jupyter.sh
 	chown -R vagrant:vagrant /home/vagrant/run_jupyter.sh
 	chmod +x /home/vagrant/run_jupyter.sh
 

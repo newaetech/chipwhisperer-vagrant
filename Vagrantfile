@@ -14,16 +14,15 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "debian/stretch64"
 
-
-  config.vm.provision "file", source: "Makefile", destination: "Makefile"
-  config.vm.provision "file", source: "pyenv.tail", destination: "pyenv.tail"
-  config.vm.provision "shell",
-   inline: "DEBIAN_FRONTEND=noninteractive apt-get install make; DEBIAN_FRONTEND=noninteractive make"
-
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
+  
+  config.vm.provision "file", source: "Makefile", destination: "Makefile"
+  config.vm.provision "file", source: "pyenv.tail", destination: "pyenv.tail"
+  config.vm.provision "shell",
+   inline: "DEBIAN_FRONTEND=noninteractive apt-get install make; DEBIAN_FRONTEND=noninteractive make"
   
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--usb", "on"]
@@ -43,20 +42,15 @@ Vagrant.configure("2") do |config|
   # NOTE: This will enable public access to the opened port
   #config.vm.network "forwarded_port", guest: 8888, host: 8080
 
-
-config.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2222
-config.vm.network "forwarded_port", guest: 8888, host: 8888
-
-
-
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
   #config.vm.network "forwarded_port", guest: 8888, host: 8080, host_ip: "127.0.0.1"
+  config.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2222
+  config.vm.network "forwarded_port", guest: 8888, host: 8888
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  #config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on

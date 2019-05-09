@@ -65,7 +65,7 @@
 #  token login mechanism.
 #  
 #  This can be set to false to prevent changing password from the UI/API.
-#c.NotebookApp.allow_password_change = True
+c.NotebookApp.allow_password_change = True
 
 ## Allow requests where the Host header doesn't point to a local server
 #  
@@ -264,7 +264,7 @@ c.NotebookApp.ip = '0.0.0.0'
 #  platform dependent and determined by the python standard library `webbrowser`
 #  module, unless it is overridden using the --browser (NotebookApp.browser)
 #  configuration option.
-#c.NotebookApp.open_browser = True
+c.NotebookApp.open_browser = True
 
 ## Hashed password to use for web authentication.
 #  
@@ -281,7 +281,7 @@ c.NotebookApp.ip = '0.0.0.0'
 #  
 #  In such a case, server the notebook server on localhost is not secure since
 #  any user can connect to the notebook server via ssh.
-#c.NotebookApp.password_required = False
+c.NotebookApp.password_required = False
 
 ## The port the notebook server will listen on.
 #c.NotebookApp.port = 8888
@@ -337,7 +337,7 @@ c.NotebookApp.ip = '0.0.0.0'
 #  
 #  Setting to an empty string disables authentication altogether, which is NOT
 #  RECOMMENDED.
-c.NotebookApp.token = ''
+#c.NotebookApp.token = 'NEWAE'
 
 ## Supply overrides for the tornado.web.Application that the Jupyter notebook
 #  uses.
