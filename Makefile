@@ -60,7 +60,8 @@ all:
 
 
 	#setup pyenv for user
-	su vagrant - -c "pyenv global 3.6.7/envs/cw"
+	su vagrant - -c "source /home/vagrant/pyenv.tail; pyenv global 3.6.7/envs/cw"
+	#pyenv global 3.6.7/envs/cw
 
 	#set user password to be expired
 	chage -d 0 vagrant
