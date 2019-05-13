@@ -6,16 +6,10 @@ The created VM is called ChipWhisperer Jupyter and it should be stored in the re
 See setup.sh for the shell commands used to setup the VM
 
 ## Building the VM
-To build the VM, navigate to this folder and run `vagrant up`.
+To build the VM, navigate to this folder and run `vagrant up`. Users will now have to log into the VM, update the password, add a password to Jupyter (`$ jupyter notebook password`) and reboot.
 
 ## Connecting to Jupyter
-To connect to jupyter, the user will have to go into *Global Tools* in VirtualBox and create a (or modify an existing) Host-Only network with:
-
-DHCP Server disabled
-IPv4 Address = 192.168.33.11
-IPv4 Network Mask = 255.255.255.0
-
-The user should then ensure that in the VM's settings (in VirtualBox), that Netowrk Adapter 2 is a Host-Only Adapter using the Host-Only Network created or modified above. This needs to be repeated if the VM is copied to or run on a new machine (since these settings are host OS specific).
+Jupyter can now be connected to via `localhost:8888`.
 
 **JUYPTER CAN ONLY BE CONNECTED TO ON FIREFOX/CHROME, EDGE/SAFARI DON'T WORK, OTHER BROWSERS UNTESTED**
 ## Potential Issues and Troubleshooting
