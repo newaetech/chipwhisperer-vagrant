@@ -58,6 +58,12 @@ all:
 	#fi \
 	#)
 
+	#set user password to be expired
+	chage -d 0 vagrant
+
+	#setup pyenv for user
+	su vagrant - -c "pyenv global 3.6.7/envs/cw"
+
 	#done now reboot
 	reboot
 
