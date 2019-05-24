@@ -12,6 +12,7 @@ all:
 	apt-get install -y gcc-arm-none-eabi
 	apt-get install -y make
 	apt-get install -y dos2unix
+	apt-get install -y python3-gmpy2
 	# https://github.com/bbcmicrobit/micropython/issues/514
 	# Ubuntu 18.04 arm-none-eabi-gcc has broken libc/nano specs (always tries to use full arm w/invalid instructions)
 	-rm *.deb
