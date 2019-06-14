@@ -104,6 +104,7 @@ stage4:
 	pip install --upgrade pip; \
 	pip install cufflinks plotly phoenixAES terminaltables; \
 	pip install numpy; \
+	pip install nbparamaterise; \
 	cd /home/vagrant/work/projects/chipwhisperer/software; \
 	pip install -r requirements.txt; \
 	python3 setup.py develop; \
