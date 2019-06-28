@@ -3,9 +3,9 @@ SHELL := /bin/bash
 all:
 	apt-get update -y
 	apt-get upgrade -y
-	apt-get install -y curl git mc emacs net-tools
+	apt-get install -y curl git mc net-tools
 	apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev
-	apt-get install -y libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev
+	apt-get install -y libreadline-dev libsqlite3-dev wget curl libncurses5-dev libncursesw5-dev
 	apt-get install -y xz-utils tk-dev libffi-dev liblzma-dev python-openssl
 	apt-get install -y gcc-avr
 	apt-get install -y avr-libc
@@ -13,12 +13,13 @@ all:
 	apt-get install -y make
 	apt-get install -y dos2unix
 	apt-get install -y python3-gmpy2
+	apt-get install -y jq
 	# https://github.com/bbcmicrobit/micropython/issues/514
 	# Ubuntu 18.04 arm-none-eabi-gcc has broken libc/nano specs (always tries to use full arm w/invalid instructions)
 	-rm *.deb
 	wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-dev_3.0.0.20180802-2_all.deb
 	wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb
-	#dpkg -i libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb libnewlib-dev_3.0.0.20180802-2_all.deb 
+	#dpkg -i libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb libnewlib-dev_3.0.0.20180802-2_all.deb
 	dos2unix /home/vagrant/pyenv.tail
 
 	su vagrant - -c "make stage2"
@@ -55,7 +56,7 @@ all:
 
 	# check if cron job already inserted, and if not insert it
 	#(if !(crontab -u vagrant -l | grep "run_jupyter\.sh"); then \
-	(crontab -u vagrant -l 2>/dev/null; echo "@reboot /home/vagrant/run_jupyter.sh") | crontab -u vagrant - 
+	(crontab -u vagrant -l 2>/dev/null; echo "@reboot /home/vagrant/run_jupyter.sh") | crontab -u vagrant -
 	#fi \
 	#)
 
@@ -88,6 +89,8 @@ stage3:
 	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/chipwhisperer
 	cd /home/vagrant/work/projects/chipwhisperer && git checkout cw5dev
 	cd /home/vagrant/work/projects/chipwhisperer && git pull
+	cd /home/vagrant/work/projects/chipwhisperer && git submodule init jupyter/ && git submodule update
+
 	# get lascar
 	cd /home/vagrant/work/projects && git clone https://github.com/Ledger-Donjon/lascar
 
@@ -104,7 +107,7 @@ stage4:
 	pip install --upgrade pip; \
 	pip install cufflinks plotly phoenixAES terminaltables; \
 	pip install numpy; \
-	pip install nbparamaterise; \
+	pip install nbparameterise; \
 	cd /home/vagrant/work/projects/chipwhisperer/software; \
 	pip install -r requirements.txt; \
 	python3 setup.py develop; \
