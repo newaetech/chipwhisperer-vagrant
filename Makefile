@@ -16,7 +16,6 @@ all:
 	apt-get install -y jq
 	# https://github.com/bbcmicrobit/micropython/issues/514
 	# Ubuntu 18.04 arm-none-eabi-gcc has broken libc/nano specs (always tries to use full arm w/invalid instructions)
-	-rm *.deb
 	wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-dev_3.0.0.20180802-2_all.deb
 	wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb
 	#dpkg -i libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb libnewlib-dev_3.0.0.20180802-2_all.deb
@@ -87,7 +86,7 @@ stage3:
 
 	mkdir -p /home/vagrant/work/projects
 	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/chipwhisperer
-	cd /home/vagrant/work/projects/chipwhisperer && git checkout cw5dev
+	cd /home/vagrant/work/projects/chipwhisperer
 	cd /home/vagrant/work/projects/chipwhisperer && git pull
 	cd /home/vagrant/work/projects/chipwhisperer && git submodule init jupyter/ && git submodule update
 
@@ -108,8 +107,11 @@ stage4:
 	pip install cufflinks plotly phoenixAES terminaltables; \
 	pip install numpy; \
 	pip install nbparameterise; \
-	cd /home/vagrant/work/projects/chipwhisperer/software; \
+	cd /home/vagrant/work/projects/chipwhisperer/; \
+	git checkout master; \
+	cd /home/vagrant/work/projects/chipwhisperer/jupyter; \
 	pip install -r requirements.txt; \
+	cd ..; \
 	python3 setup.py develop; \
 	cd /home/vagrant/work/projects/lascar; \
 	pip install --upgrade colorama; \
