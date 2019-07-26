@@ -18,12 +18,12 @@ Vagrant.configure("2") do |config|
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
-  
+
   config.vm.provision "file", source: "Makefile", destination: "Makefile"
   config.vm.provision "file", source: "pyenv.tail", destination: "pyenv.tail"
   config.vm.provision "shell",
    inline: "DEBIAN_FRONTEND=noninteractive apt-get install make; DEBIAN_FRONTEND=noninteractive make"
-  
+
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--usb", "on"]
     vb.customize ["modifyvm", :id, "--usbxhci", "on"]
@@ -31,10 +31,14 @@ Vagrant.configure("2") do |config|
     vb.name = "ChipWhisperer Jupyter"
     vb.customize ["modifyvm", :id, "--uartmode1", "disconnected"]
     vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'NewAE Technology Inc. ChipWhisperer Lite [0100]', '--vendorid', '0x2b3e', '--productid', '0xace2']
-    vb.customize ['usbfilter', 'add', '1', '--target', :id, '--name', 'NewAE Technology Inc. ChipWhisperer Nano [0100]', '--vendorid', '0x2b3e', '--productid', '0xace0'] 
+    vb.customize ['usbfilter', 'add', '1', '--target', :id, '--name', 'NewAE Technology Inc. ChipWhisperer Nano [0100]', '--vendorid', '0x2b3e', '--productid', '0xace0']
+    vb.customize ['usbfilter', 'add', '2', '--target', :id, '--name', 'NewAE Technology Inc. ChipWhisperer Pro [0100]', '--vendorid', '0x2b3e', '--productid', '0xace3']
+    vb.customize ['usbfilter', 'add', '2', '--target', :id, '--name', 'NewAE Technology Inc. ChipWhisperer CW305', '--vendorid', '0x2b3e', '--productid', '0xc305']
+    vb.customize ['usbfilter', 'add', '2', '--target', :id, '--name', 'NewAE Technology Inc. Ballistic Gel', '--vendorid', '0x2b3e', '--productid', '0xc521']
+    vb.customize ['usbfilter', 'add', '2', '--target', :id, '--name', 'NewAE Technology Inc. PhyWhisperer', '--vendorid', '0x2b3e', '--productid', '0x610']
     vb.memory = "2048"
   end
-  #vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'ESP', '--vendorid', '0x1a86', '--productid', '0x7523'] 
+  #vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'ESP', '--vendorid', '0x1a86', '--productid', '0x7523']
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -69,8 +73,8 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
-    
-  
+
+
     # Customize the amount of memory on the VM:
     #vb.memory = "1024"
   end
