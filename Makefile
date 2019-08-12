@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 
 all:
+	cp /vagrant/run_jupyter.sh ~/
 	apt-get update -y
 	apt-get upgrade -y
 	apt-get install -y curl git mc net-tools
@@ -14,6 +15,8 @@ all:
 	apt-get install -y dos2unix
 	apt-get install -y python3-gmpy2
 	apt-get install -y jq
+	apt-get install -y pandoc
+	apt-get install -y libmpfr-dev libmpc-dev
 	# https://github.com/bbcmicrobit/micropython/issues/514
 	# Ubuntu 18.04 arm-none-eabi-gcc has broken libc/nano specs (always tries to use full arm w/invalid instructions)
 	wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-dev_3.0.0.20180802-2_all.deb
@@ -107,6 +110,7 @@ stage4:
 	pip install cufflinks plotly phoenixAES terminaltables; \
 	pip install numpy; \
 	pip install nbparameterise; \
+	pip install gmpy2; \
 	cd /home/vagrant/work/projects/chipwhisperer/; \
 	git checkout master; \
 	cd /home/vagrant/work/projects/chipwhisperer/jupyter; \
