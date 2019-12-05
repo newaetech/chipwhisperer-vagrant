@@ -13,6 +13,7 @@ apt-get install -y avr-libc
 apt-get install -y gcc-arm-none-eabi
 apt-get install -y make
 apt-get install -y dos2unix
+apt-get install -y libgmp-dev libmpfr-dev libmpc-dev
 
 apt-get update
 apt-get upgrade
@@ -26,6 +27,9 @@ dpkg -i libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb libnewlib-dev_3.0.0.201
 
 # pip installs
 python3 -m pip install --upgrade pip
+
+# install gmpy2
+pip3 install gmpy2
 
 # get lascar and install
 git clone https://github.com/Ledger-Donjon/lascar
