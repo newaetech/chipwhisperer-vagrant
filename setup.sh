@@ -21,9 +21,9 @@ apt-get upgrade
 # https://github.com/bbcmicrobit/micropython/issues/514
 # Ubuntu 18.04 arm-none-eabi-gcc has broken libc/nano specs (always tries to use full arm w/invalid instructions)
 rm *.deb
-wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-dev_3.0.0.20180802-2_all.deb
-wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb
-dpkg -i libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb libnewlib-dev_3.0.0.20180802-2_all.deb 
+wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-doc_3.1.0.20181231-1_all.deb 
+wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-arm-none-eabi_3.1.0.20181231-1_all.deb
+dpkg -i libnewlib-arm-none-eabi_3.1.0.20181231-1_all.deb libnewlib-doc_3.1.0.20181231-1_all.deb 
 
 # pip installs
 python3 -m pip install --upgrade pip
