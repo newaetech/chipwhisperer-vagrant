@@ -17,11 +17,6 @@ all:
 	apt-get install -y jq
 	apt-get install -y pandoc
 	apt-get install -y libmpfr-dev libmpc-dev
-	# https://github.com/bbcmicrobit/micropython/issues/514
-	# Ubuntu 18.04 arm-none-eabi-gcc has broken libc/nano specs (always tries to use full arm w/invalid instructions)
-	wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-doc_3.1.0.20181231-1_all.deb 
-	wget http://mirrors.kernel.org/ubuntu/pool/universe/n/newlib/libnewlib-arm-none-eabi_3.1.0.20181231-1_all.deb
-	#dpkg -i libnewlib-arm-none-eabi_3.0.0.20180802-2_all.deb libnewlib-dev_3.0.0.20180802-2_all.deb
 	dos2unix /home/vagrant/pyenv.tail
 
 	su vagrant - -c "make stage2"
@@ -62,13 +57,15 @@ all:
 	#fi \
 	#)
 
+	echo "if grep -q \"password\" \"/home/vagrant/.jupyter/jupyter_notebook_config.json\"; then echo \"Jupyter notebook password set, server automatically started\"; else echo \"Please set password for Jupyter:\"; jupyter notebook password; echo \"Thank you. Reboot to start Jupyter\"; fi" >> /home/vagrant/.bashrc
+
 
 	#setup pyenv for user
 	su vagrant - -c "source /home/vagrant/pyenv.tail; pyenv global 3.6.7/envs/cw"
 	#pyenv global 3.6.7/envs/cw
 
-	#set user password to be expired
-	chage -d 0 vagrant
+
+
 	#done now reboot
 	reboot
 
