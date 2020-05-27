@@ -57,7 +57,18 @@ all:
 	#fi \
 	#)
 
-	echo "if grep -q \"password\" \"/home/vagrant/.jupyter/jupyter_notebook_config.json\"; then echo \"Jupyter notebook password set, server automatically started\"; else echo \"Please set password for Jupyter:\"; jupyter notebook password; echo \"Thank you. Reboot to start Jupyter\"; fi" >> /home/vagrant/.bashrc
+	printf "\
+	if grep -q \"password\" \"/home/vagrant/.jupyter/jupyter_notebook_config.json\"; then \\n \
+		if ps aux | grep \"jupyter-notebook\" | grep "versions"; \\n \
+			then echo \"Jupyter notebook server started\"; \\n \
+		else \\n \
+			echo \"Jupyter notebook process not started. Check logs in work/projects\" \\n \
+		fi \\n \
+	else \\n \
+	    echo \"Please set password for Jupyter:\"; \\n \
+	    jupyter notebook password; echo \"Thank you. Reboot to start Jupyter\"; \\n \
+	fi\
+	" >> /home/vagrant/.bashrc
 
 
 	#setup pyenv for user
@@ -103,6 +114,7 @@ stage4:
 	set -e; \
 	source /home/vagrant/pyenv.tail; \
 	pyenv activate cw; \
+	pip install wheel; \
 	pip install --upgrade pip; \
 	pip install cufflinks plotly phoenixAES terminaltables; \
 	pip install numpy; \
