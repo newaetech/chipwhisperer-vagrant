@@ -27,6 +27,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--usb", "on"]
     vb.customize ["modifyvm", :id, "--usbxhci", "on"]
+    vb.customize ["modifyvm", :id, "--usbohci", "off"]
     vb.gui = true
     vb.name = "ChipWhisperer Jupyter"
     vb.customize ["modifyvm", :id, "--uartmode1", "disconnected"]
