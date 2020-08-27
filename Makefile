@@ -120,6 +120,8 @@ stage4:
 	pip install numpy; \
 	pip install nbparameterise; \
 	pip install gmpy2; \
+	pip install scared; \
+	pip install fastdtw; \
 	cd /home/vagrant/work/projects/chipwhisperer/; \
 	git checkout master; \
 	cd /home/vagrant/work/projects/chipwhisperer/jupyter; \
