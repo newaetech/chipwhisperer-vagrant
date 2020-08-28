@@ -123,9 +123,9 @@ stage4:
 	pip install scared; \
 	pip install fastdtw; \
 	cd /home/vagrant/work/projects/chipwhisperer/; \
-	git checkout master; \
 	cd /home/vagrant/work/projects/chipwhisperer/jupyter; \
 	pip install -r requirements.txt; \
+	pip install tqdm --upgrade; \
 	cd ..; \
 	python3 setup.py develop; \
 	cd /home/vagrant/work/projects/lascar; \
