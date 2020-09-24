@@ -26,6 +26,7 @@ all:
 	# USB permissions
 	cp /home/vagrant/work/projects/chipwhisperer/hardware/99-newae.rules /etc/udev/rules.d/
 	usermod -a -G plugdev vagrant
+	usermod -a -G dialout vagrant
 	#udevadm control --reload-rules
 
 	# copy cron script from vagrant folder
