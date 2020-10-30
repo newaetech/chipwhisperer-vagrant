@@ -3,6 +3,8 @@ SHELL := /bin/bash
 all:
 	cp /vagrant/run_jupyter.sh ~/
 	apt-get update -y
+	#AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+	sudo apt-mark hold grub*
 	apt-get upgrade -y
 	apt-get install -y curl git mc net-tools
 	apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev
@@ -27,7 +29,7 @@ all:
 	cp /home/vagrant/work/projects/chipwhisperer/hardware/99-newae.rules /etc/udev/rules.d/
 	usermod -a -G plugdev vagrant
 	usermod -a -G dialout vagrant
-	#udevadm control --reload-rules
+	udevadm control --reload-rules
 
 	# copy cron script from vagrant folder
 	cp /vagrant/run_jupyter.sh /home/vagrant/
