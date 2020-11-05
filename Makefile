@@ -19,6 +19,8 @@ all:
 	apt-get install -y jq
 	apt-get install -y pandoc
 	apt-get install -y libmpfr-dev libmpc-dev
+	apt-get install -y vim
+	apt-get install -y usbutils
 	dos2unix /home/vagrant/pyenv.tail
 
 	su vagrant - -c "make stage2"
