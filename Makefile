@@ -106,6 +106,7 @@ stage3:
 	cd /home/vagrant/work/projects/chipwhisperer
 	cd /home/vagrant/work/projects/chipwhisperer && git pull
 	cd /home/vagrant/work/projects/chipwhisperer && git submodule init jupyter/ && git submodule update
+	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/phywhispererusb
 
 	# get lascar
 	cd /home/vagrant/work/projects && git clone https://github.com/Ledger-Donjon/lascar
@@ -137,5 +138,7 @@ stage4:
 	cd /home/vagrant/work/projects/lascar; \
 	pip install --upgrade colorama; \
 	python setup.py install; \
+	cd /home/vagrant/work/projects/phywhispererusb; \
+	python setup.py develop; \
 	)
 
