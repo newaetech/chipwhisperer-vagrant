@@ -1,3 +1,4 @@
 export PATH="~/.pyenv/bin:$PATH"
+export PATH="~/.pyenv/shims:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"

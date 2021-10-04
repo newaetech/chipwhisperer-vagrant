@@ -26,10 +26,10 @@ all:
 
 	su vagrant - -c "make stage2"
 
-	find /home/vagrant/work/projects -exec dos2unix {} \;
+	#find /home/vagrant/work/projects -exec dos2unix {} \;
 
 	# USB permissions
-	cp /home/vagrant/work/projects/chipwhisperer/hardware/99-newae.rules /etc/udev/rules.d/
+	cp /home/vagrant/work/projects/chipwhisperer/hardware/50-newae.rules /etc/udev/rules.d/
 	usermod -a -G plugdev vagrant
 	usermod -a -G dialout vagrant
 	udevadm control --reload-rules
@@ -78,7 +78,7 @@ all:
 
 
 	#setup pyenv for user
-	su vagrant - -c "source /home/vagrant/pyenv.tail; pyenv global 3.6.7/envs/cw"
+	su vagrant - -c "source /home/vagrant/pyenv.tail; pyenv global 3.7.7/envs/cw"
 	#pyenv global 3.6.7/envs/cw
 
 
@@ -102,7 +102,7 @@ stage3:
 	git config --global user.email "Vagrant@none.com"
 
 	mkdir -p /home/vagrant/work/projects
-	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/chipwhisperer
+	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/chipwhisperer 2>&1
 	cd /home/vagrant/work/projects/chipwhisperer
 	cd /home/vagrant/work/projects/chipwhisperer && git pull
 	cd /home/vagrant/work/projects/chipwhisperer && git submodule init jupyter/ && git submodule update
@@ -111,8 +111,8 @@ stage3:
 	# get lascar
 	cd /home/vagrant/work/projects && git clone https://github.com/Ledger-Donjon/lascar
 
-	pyenv install 3.6.7
-	pyenv virtualenv 3.6.7 cw
+	pyenv install 3.7.7
+	pyenv virtualenv 3.7.7 cw
 	make stage4
 
 stage4:
