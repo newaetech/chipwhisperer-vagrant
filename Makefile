@@ -1,15 +1,15 @@
 SHELL := /bin/bash
 
 all:
-	cp /vagrant/run_jupyter.sh ~/
+	# cp /vagrant/run_jupyter.sh ~/
 	apt-get update -y
 	#AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 	sudo apt-mark hold grub*
-	apt-get upgrade -y
+	# apt-get upgrade -y
 	apt-get install -y curl git mc net-tools
 	apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev
 	apt-get install -y libreadline-dev libsqlite3-dev wget curl libncurses5-dev libncursesw5-dev
-	apt-get install -y xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+	apt-get install -y xz-utils tk-dev libffi-dev liblzma-dev python3-openssl
 	apt-get install -y gcc-avr
 	apt-get install -y avr-libc
 	apt-get install -y gcc-arm-none-eabi
@@ -23,6 +23,8 @@ all:
 	apt-get install -y usbutils
 	apt-get install -y libusb-1.0.0-dev
 	dos2unix /home/vagrant/pyenv.tail
+	apt-get install -y openocd
+	apt-get clean
 
 	su vagrant - -c "make stage2"
 
@@ -35,7 +37,7 @@ all:
 	udevadm control --reload-rules
 
 	# copy cron script from vagrant folder
-	cp /vagrant/run_jupyter.sh /home/vagrant/
+	# cp /vagrant/run_jupyter.sh /home/vagrant/
 	dos2unix /home/vagrant/run_jupyter.sh
 	chown -R vagrant:vagrant /home/vagrant/run_jupyter.sh
 	chmod +x /home/vagrant/run_jupyter.sh
@@ -45,7 +47,7 @@ all:
 
 	# copy jupyter config
 	mkdir -p /home/vagrant/.jupyter
-	cp /vagrant/jupyter_notebook_config.py /home/vagrant/.jupyter/
+	# cp /vagrant/jupyter_notebook_config.py /home/vagrant/.jupyter/
 
 	# make sure jupyter is under the vagrant user
 	# maybe just make /home/vagrant all vagrant?
@@ -78,7 +80,7 @@ all:
 
 
 	#setup pyenv for user
-	su vagrant - -c "source /home/vagrant/pyenv.tail; pyenv global 3.7.7/envs/cw"
+	su vagrant - -c "source /home/vagrant/pyenv.tail; pyenv global 3.9.7/envs/cw"
 	#pyenv global 3.6.7/envs/cw
 
 
@@ -101,18 +103,24 @@ stage3:
 	git config --global user.name "Vagrant"
 	git config --global user.email "Vagrant@none.com"
 
-	mkdir -p /home/vagrant/work/projects
-	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/chipwhisperer 2>&1
-	cd /home/vagrant/work/projects/chipwhisperer
-	cd /home/vagrant/work/projects/chipwhisperer && git pull
-	cd /home/vagrant/work/projects/chipwhisperer && git submodule init jupyter/ && git submodule update
-	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/phywhispererusb
 
-	# get lascar
+	mkdir -p /home/vagrant/work/projects
+
+	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/chipwhisperer 2>&1
+	cd /home/vagrant/work/projects/chipwhisperer && git pull \
+	&& git submodule update --init jupyter/ && cd jupyter && git checkout master
+	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/phywhispererusb
 	cd /home/vagrant/work/projects && git clone https://github.com/Ledger-Donjon/lascar
 
-	pyenv install 3.7.7
-	pyenv virtualenv 3.7.7 cw
+
+	&& cd /home/vagrant/work/projects/chipwhisperer \
+	&& find ./hardware/victims/cw305_artixtarget -type f -exec shred -uzfn 1 "{}" \; \
+	&& find ./hardware/victims/firmware/hal/silabs_sdk -type f -exec shred -uzfn 1 "{}" \; \
+	&& find ./hardware/victims/firmware/esp32 -type f -exec shred -uzfn 1 "{}" \; \
+
+
+	pyenv install 3.9.7
+	pyenv virtualenv 3.9.7 cw
 	make stage4
 
 stage4:
@@ -123,14 +131,13 @@ stage4:
 	pyenv activate cw; \
 	pip install wheel; \
 	pip install --upgrade pip; \
-	pip install cufflinks plotly phoenixAES terminaltables; \
+	pip install phoenixAES terminaltables; \
 	pip install numpy; \
 	pip install nbparameterise; \
 	pip install gmpy2; \
-	pip install scared; \
 	pip install fastdtw; \
-	cd /home/vagrant/work/projects/chipwhisperer/; \
 	cd /home/vagrant/work/projects/chipwhisperer/jupyter; \
+	ls; \
 	pip install -r requirements.txt; \
 	pip install tqdm --upgrade; \
 	cd ..; \

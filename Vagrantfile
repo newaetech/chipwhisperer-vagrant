@@ -12,13 +12,17 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "debian/stretch64"
+  config.vm.box = "generic/debian11"
+  # config.vm.box = "debian/stretch64"
+  #config.vm.box = "generic/arch"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
 
+  config.vm.provision "file", source: "run_jupyter.sh", destination: "run_jupyter.sh"
+  config.vm.provision "file", source: "jupyter_notebook_config.py", destination: ".jupyter/jupyter_notebook_config.py"
   config.vm.provision "file", source: "Makefile", destination: "Makefile"
   config.vm.provision "file", source: "pyenv.tail", destination: "pyenv.tail"
   config.vm.provision "shell",
