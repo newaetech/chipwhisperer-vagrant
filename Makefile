@@ -15,11 +15,7 @@ all:
 	apt-get install -y gcc-arm-none-eabi
 	apt-get install -y make
 	apt-get install -y dos2unix
-	apt-get install -y python3-gmpy2
-	apt-get install -y jq
-	apt-get install -y pandoc
 	apt-get install -y libmpfr-dev libmpc-dev
-	apt-get install -y vim
 	apt-get install -y usbutils
 	apt-get install -y libusb-1.0.0-dev
 	dos2unix /home/vagrant/pyenv.tail
@@ -52,12 +48,6 @@ all:
 	# make sure jupyter is under the vagrant user
 	# maybe just make /home/vagrant all vagrant?
 	chown vagrant:vagrant -R /home/vagrant/
-
-	# Enable jupyter extensions
-	su vagrant - -c "source /home/vagrant/pyenv.tail; pyenv activate cw; jupyter nbextension enable toc2/main"
-	su vagrant - -c "source /home/vagrant/pyenv.tail; pyenv activate cw;  jupyter nbextension enable collapsible_headings/main"
-
-	su vagrant -  -c "source /home/vagrant/pyenv.tail; pyenv activate cw; jupyter nbextensions_configurator enable --user"
 
 	# check if cron job already inserted, and if not insert it
 	#(if !(crontab -u vagrant -l | grep "run_jupyter\.sh"); then \
@@ -106,17 +96,20 @@ stage3:
 
 	mkdir -p /home/vagrant/work/projects
 
-	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/chipwhisperer 2>&1
-	cd /home/vagrant/work/projects/chipwhisperer && git pull \
-	&& git submodule update --init jupyter/ && cd jupyter && git checkout master
-	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/phywhispererusb
-	cd /home/vagrant/work/projects && git clone https://github.com/Ledger-Donjon/lascar
+	cd /home/vagrant/work/projects && git clone https://github.com/newaetech/chipwhisperer --depth 1 --shallow-submodules --sparse 2>&1
+	cd /home/vagrant/work/projects/chipwhisperer && \
+	git sparse-checkout set "/*" \!hardware/victims/cw305_artixtarget \!hardware/victims/firmware/hal/silabs_sdk \!hardware/victims/firmware/esp32
+
+	cd /home/vagrant/work/projects/chipwhisperer && rm -rf jupyter && git clone --depth 1 --sparse https://github.com/newaetech/chipwhisperer-jupyter jupyter && \
+	cd jupyter && git sparse-checkout set "/*" \!courses/sca101/traces \!courses/sca201/traces
+	# cd /home/vagrant/work/projects && git clone https://github.com/newaetech/phywhispererusb
+	# cd /home/vagrant/work/projects && git clone https://github.com/Ledger-Donjon/lascar
 
 
-	&& cd /home/vagrant/work/projects/chipwhisperer \
-	&& find ./hardware/victims/cw305_artixtarget -type f -exec shred -uzfn 1 "{}" \; \
-	&& find ./hardware/victims/firmware/hal/silabs_sdk -type f -exec shred -uzfn 1 "{}" \; \
-	&& find ./hardware/victims/firmware/esp32 -type f -exec shred -uzfn 1 "{}" \; \
+	# cd /home/vagrant/work/projects/chipwhisperer \
+	# && find ./hardware/victims/cw305_artixtarget -type f -exec shred -uzfn 1 "{}" \; \
+	# && find ./hardware/victims/firmware/hal/silabs_sdk -type f -exec shred -uzfn 1 "{}" \; \
+	# && find ./hardware/victims/firmware/esp32 -type f -exec shred -uzfn 1 "{}" \; \
 
 
 	pyenv install 3.9.7
@@ -142,10 +135,5 @@ stage4:
 	pip install tqdm --upgrade; \
 	cd ..; \
 	python3 setup.py develop; \
-	cd /home/vagrant/work/projects/lascar; \
-	pip install --upgrade colorama; \
-	python setup.py install; \
-	cd /home/vagrant/work/projects/phywhispererusb; \
-	python setup.py develop; \
 	)
 
