@@ -28,6 +28,8 @@ all:
 
 	# USB permissions
 	cp /home/vagrant/work/projects/chipwhisperer/hardware/50-newae.rules /etc/udev/rules.d/
+	groupadd chipwhisperer
+	usermod -a -G chipwhisperer vagrant
 	usermod -a -G plugdev vagrant
 	usermod -a -G dialout vagrant
 	udevadm control --reload-rules
